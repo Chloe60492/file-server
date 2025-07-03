@@ -1,0 +1,29 @@
+version: '3.9'
+
+services:
+  file-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: file-server
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    volumes:
+      - ./app:/code/app
+
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+  cli:
+    build:
+      context: .
+      dockerfile: Dockerfile.cli
+    container_name: file-cli
+    env_file:
+      - .env
+    volumes:
+      - ./cli:/code/cli
+    tty: true
+    stdin_open: true
+    depends_on:
+      - file-server

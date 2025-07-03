@@ -1,0 +1,16 @@
+# Dockerfile.cli
+
+FROM python:3.11-slim
+
+# Set working directory
+WORKDIR /code
+
+# Copy dependencies and install
+COPY requirement.txt .
+RUN pip install --no-cache-dir -r requirement.txt
+
+# Copy only CLI files
+COPY cli/ ./cli
+
+# Entry point: open interactive shell into CLI
+CMD ["python", "-m", "cli.main"]

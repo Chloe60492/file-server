@@ -2,6 +2,5 @@ fastapi
 uvicorn
 azure-storage-blob
 python-dotenv
-click
 requests
-pytest
+python-multipart

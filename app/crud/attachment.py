@@ -30,10 +30,23 @@ def list_blob_files():
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+# def delete_blob_file(filename: str):
+#     try:
+#         blob_client = container_client.get_blob_client(filename)
+#         blob_client.delete_blob()
+#         return {"message": f"File '{filename}' deleted."}
+#     except Exception:
+#         raise HTTPException(status_code=404, detail="File not found.")
 def delete_blob_file(filename: str):
     try:
+        blobs = [blob.name for blob in container_client.list_blobs()]
+        if filename not in blobs:
+            raise HTTPException(status_code=404, detail=f"Blob '{filename}' not found.")
         blob_client = container_client.get_blob_client(filename)
         blob_client.delete_blob()
         return {"message": f"File '{filename}' deleted."}
-    except Exception:
-        raise HTTPException(status_code=404, detail="File not found.")
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+

@@ -9,7 +9,7 @@ router = APIRouter(prefix="/attachments", tags=["Attachments"])
 async def upload_file(file: UploadFile = File(...)):
     return await attachment.upload_file_to_blob(file)
 
-@router.get("/download/{filename}")
+@router.get("/download/{filename:path}")
 def download_file(filename: str):
     return attachment.download_blob_file(filename)
 
@@ -17,6 +17,6 @@ def download_file(filename: str):
 def list_files():
     return attachment.list_blob_files()
 
-@router.delete("/delete/{filename}")
+@router.delete("/delete/{filename:path}")
 def delete_file(filename: str):
     return attachment.delete_blob_file(filename)
