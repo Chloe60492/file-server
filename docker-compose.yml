@@ -23,6 +23,7 @@ services:
       - .env
     volumes:
       - ./cli:/code/cli
+      - ./downloads:/code/downloads
     tty: true
     stdin_open: true
     depends_on:
