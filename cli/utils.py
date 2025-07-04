@@ -1,7 +1,11 @@
 # cli/utils.py
 import requests
 import os
-from app.config import FILE_SERVER_URL
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+FILE_SERVER_URL = os.getenv("FILE_SERVER_URL")
 
 def upload_file(file_path):
     """Upload a file to the server"""
