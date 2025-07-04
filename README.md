@@ -52,6 +52,16 @@ This will:
 
 ## Using the CLI
 
+### Command
+```
+upload <file_path>: Upload a file to the server.
+download <file_name>: Download a file from the server. • list: List all files stored on the server.
+delete <file_name>: Delete a file from the server.
+help: List the avaliable commands.
+exit: Exit the current interface.
+```
+
+
 ### CLI in Docker 
 After running `docker-compose up`, attach the cli container shell and run `python -m cli.main` in the container 
 Example commands:
