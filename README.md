@@ -17,9 +17,9 @@ This project is a file server implemented with **FastAPI** and **Azure Blob Stor
 ## Project Structure
 
 ```
-├── app/ # FastAPI backend (main.py, routes, crud)
+├── app/ # FastAPI backend (main.py, routes, crud, api tests)
 ├── cli/ # CLI tool (interactive shell)
-├── utils/ # Shared utilities (Azure config)
+├── tests/ # stress test
 ├── .env # Environment file (Azure connection string)
 ├── Dockerfile # Backend Dockerfile
 ├── Dockerfile.cli # CLI Dockerfile
@@ -33,6 +33,7 @@ This project is a file server implemented with **FastAPI** and **Azure Blob Stor
 ## Environment Setup
 
 Create a `.env` file at the root:
+* prerequisite: create an AZURE storage account and a container for file storage. (doc: https://learn.microsoft.com/zh-tw/azure/storage/common/storage-account-create?tabs=azure-portal)
 
 ```env
 AZURE_STORAGE_CONNECTION_STRING=your-azure-connection-string
@@ -74,3 +75,9 @@ Example commands:
 ```
 ### CLI Locally
 After the server is running, run `python -m cli.main`
+
+
+## Tests
+
+* `app/tests`: file server unit tests, run `pytest app/tests` in `file_server/` directory.
+* `tests`: stress test with Locust, run `locust` in `file_server/tests/` directory.
