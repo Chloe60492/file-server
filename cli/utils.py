@@ -18,12 +18,19 @@ def upload_file(file_path):
 def download_file(file_name, save_path=None):
     """Download a file from the server and save it to the specified path (optional)"""
     try:
-        res = requests.get(f"{FILE_SERVER_URL}/download/{file_name}", stream=True)
+        # 使用 query string 傳送 filename
+        res = requests.get(
+            f"{FILE_SERVER_URL}/download",
+            params={"filename": file_name},
+            stream=True
+        )
+
         if res.status_code == 200:
             # Determine the full save path
             if save_path:
-                # Ensure directory exists
-                os.makedirs(os.path.dirname(save_path), exist_ok=True)
+                dir_path = os.path.dirname(save_path)
+                if dir_path:
+                    os.makedirs(dir_path, exist_ok=True)
                 full_path = save_path
             else:
                 full_path = file_name  # Save to current directory
@@ -31,7 +38,8 @@ def download_file(file_name, save_path=None):
             # Write the file content
             with open(full_path, 'wb') as f:
                 for chunk in res.iter_content(chunk_size=8192):
-                    f.write(chunk)
+                    if chunk:
+                        f.write(chunk)
 
             return {"message": f"Downloaded '{file_name}' to '{full_path}' successfully."}
         else:
