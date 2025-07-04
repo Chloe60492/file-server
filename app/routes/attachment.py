@@ -2,6 +2,8 @@
 from fastapi import APIRouter, UploadFile, File
 from fastapi.responses import StreamingResponse
 from app.crud import attachment
+from fastapi import Query
+from typing import Optional
 
 router = APIRouter(prefix="/attachments", tags=["Attachments"])
 
@@ -9,8 +11,8 @@ router = APIRouter(prefix="/attachments", tags=["Attachments"])
 async def upload_file(file: UploadFile = File(...)):
     return await attachment.upload_file_to_blob(file)
 
-@router.get("/download/{filename:path}")
-def download_file(filename: str):
+@router.get("/download")
+def download_file(filename: Optional[str] = Query(None)):
     return attachment.download_blob_file(filename)
 
 @router.get("/list")
